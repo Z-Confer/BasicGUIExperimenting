@@ -2,9 +2,11 @@ package gui;
 
 import java.sql.*;
 
+//basic database query management 
 public class DatabaseAccess {
 	private String databaseURL = "jdbc:ucanaccess://C:/Users/Zach/Desktop/Java/BasicGUI/src/gui/GraziosoAnimals.accdb";
 
+	//adds information based on user inputs
 	public void AddInformation(String[] finishedFields, String animalType) {
 
 		try (Connection connection = DriverManager.getConnection(databaseURL)) {
@@ -62,6 +64,7 @@ public class DatabaseAccess {
 		}	
 	}
 	
+	//retrieve information for animal in either Dogs or Monkeys tables based on name querying 
 	public String[] RetrieveInformation (String animalName, String animalType) {
 		
 		try (Connection connection = DriverManager.getConnection(databaseURL)) {
@@ -97,7 +100,7 @@ public class DatabaseAccess {
 	}
 	
 	
-	
+	//solves for the array length of a set of data
 	public int resultSetLength(ResultSet results){
 		int length = 0;
 		
@@ -113,7 +116,7 @@ public class DatabaseAccess {
 			return 0;
 		}
 	}
-		
+		//method utilized in turning the ResultSet from querying the db into an array(Specific to the names, not other column data)
 	public String[] convertResultSetIntoStringArrayNames(ResultSet results, int index, int resultsLength) {
 		String[] resultsFinal = new String[resultsLength];
 		
@@ -135,6 +138,7 @@ public class DatabaseAccess {
 		}
 	}
 	
+	//method similar to the previous method, however used to turn all other columns into a readable array
 	public String[] convertResultSetIntoStringArrayData(ResultSet results, String animalType) {
 		int colCount;
 		String[] data;
@@ -165,7 +169,7 @@ public class DatabaseAccess {
 		}
 	}
 	
-	
+	//returns all names from the database
 	public String[] returnNames(String animalType) {
 		int len = 0;
 		String[] allNames;
@@ -204,6 +208,7 @@ public class DatabaseAccess {
 		return new String[0];
 	}
 	
+	//method used to update existing information
 	public void updateInformation(String animalType, String[] finishedFields, String animalName) {
 		
 		for (String value : finishedFields) {
@@ -213,6 +218,8 @@ public class DatabaseAccess {
 		System.out.println("\n");
 		
 		try (Connection connection = DriverManager.getConnection(databaseURL)){
+			
+			//Queries the Dogs table and sets the answer fields in the db to be whatever currently resides in the text boxes
 			if ("Dog".equals(animalType)) {
 				String sql = "UPDATE Dogs SET [Animal Name] = ?, Gender = ?, Age = ?, Weight = ?, [Acquisition Date] = ?, [Acquisition Country] = ?, [Training Status] = ?, [In Service Country] = ?, [Animal Breed] = ?, Reserved = ? WHERE [Animal Name] = ?";
 				
@@ -235,6 +242,7 @@ public class DatabaseAccess {
 					System.out.println("A row has successfully been updated");
 				}
 				
+				//Queries the Monkeys table and sets the answer fields in the db to be whatever currently resides in the text boxes				
 			} else {
 				String sql = "UPDATE Monkeys SET [Animal Name] = ?, Gender = ?, Age = ?, Weight = ?, [Acquisition Date] = ?, [Acquisition Country] = ?, [Training Status] = ?, [In Service Country] = ?, Reserved = ?, [Tail Length] = ?, [Body Length] = ?, Height = ?, Species = ? WHERE [Animal Name] = ?";
 				

@@ -47,6 +47,10 @@ public class UpdateHelper{
 	    return animalNamesDropdown;
 	}
 	
+	//multi-purpose method which is used in both AddAnimal and UpdateInfo. Uses a boolean parameter named updateOrAdd to determine whether the user is adding a new animal
+	//or updating existing information. In the event that the user is updating existing information- false is passed as the boolean parameter, and creates text boxes auto-filled with
+	//the existing information, which the user can then choose to alter should need be. However, in the addAnimal class, when true is passed as the parameter, it populates the field
+	//with empty text boxes 
 	public void updateFields(JPanel dynamicP, String animalType, boolean updateOrAdd, String animalName, String[] animalD) { //true corresponds to adding, false corresponds to updating
 		dynamicP.removeAll();
 		
@@ -207,18 +211,20 @@ public class UpdateHelper{
 		
 		}
 
-	
+	//method used in retrieve info which populates existing information into JLabels
 	public static void updatePageForDataFields(String animalName, String animalType, JPanel dynamicP, JComboBox<String> animalNamesDropdown) {
 		
 
 		System.out.println("updatePageForDataFields firing with animalName: " + animalName);
 		
+		//creates an instance of the database manager and queries for information recorded under the selected animal name
 		DatabaseAccess db = new DatabaseAccess();
 		String[] animalData = db.RetrieveInformation(animalName, animalType);
 		
 		dynamicP.removeAll();
 		UpdateHelper.addRow("Animal Name: ", animalNamesDropdown, dynamicP, 0);
 		
+			//updates the dynamic panel and auto-populates with existing information on the selected dog
 		if ("Dog".equals(animalType)) {
 			UpdateHelper.addRow("Gender: ", new JLabel((String) animalData[2]), dynamicP, 1);
 			UpdateHelper.addRow("Age: ", new JLabel((String) animalData[3]), dynamicP, 2);
@@ -230,6 +236,7 @@ public class UpdateHelper{
 			UpdateHelper.addRow("Breed: ", new JLabel((String) animalData[9]), dynamicP, 8);
 			UpdateHelper.addRow("Reserved: ", new JLabel((String) animalData[10]), dynamicP, 9);
 			
+			//updates the dynamic panel and auto-populates with existing information on the selected monkey
 		} else if ("Monkey".equals(animalType)) {
 			UpdateHelper.addRow("Gender: ", new JLabel((String) animalData[2]), dynamicP, 1);
 			UpdateHelper.addRow("Age: ", new JLabel((String) animalData[3]), dynamicP, 2);

@@ -73,6 +73,7 @@ public class UpdateInfo extends JFrame{
 			System.out.println("Selected animal: " + animalName);
 		});
 		
+		//action listener to detect when the submit button is selected
 		submitButton.addActionListener( e -> {
 			animalData = updateHelper.returnAndConcatenateAnswers(animalType);
 			db.updateInformation(animalType, animalData, animalName);

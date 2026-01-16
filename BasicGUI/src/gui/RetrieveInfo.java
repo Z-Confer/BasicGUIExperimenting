@@ -62,7 +62,7 @@ public class RetrieveInfo extends JFrame{
 				animalNamesDropdown.removeActionListener(listener);
 			}
 			
-			
+			//action listener for when the animal names drop down is selected
 			animalNamesDropdown.addActionListener( r -> {
 				animalName = (String) animalNamesDropdown.getSelectedItem();
 				
